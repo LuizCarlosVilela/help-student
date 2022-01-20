@@ -1,11 +1,9 @@
 <h1 align="center">
-  <img alt="GamePlay" height="80" title="Help Students" src=".github/logo.png" />
+  <img alt="Help Students" height="80" title="Help Students" src=".github/logo.png" />
 </h1>
 
 <p align="center">
   <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=E51C44&labelColor=0A1033">
-
- <img src="" alt="Help Students" />
 </p>
 
 ![cover](.github/cover.png?style=flat)
