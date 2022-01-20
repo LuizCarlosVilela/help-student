@@ -82,6 +82,7 @@ function AuthProvider({ children }: AuthProviderProps) {
           token: params.access_token,
         } as User;
 
+        api.defaults.headers.authorization = `Bearer ${params.access_token}`;
         await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
         setUser(userData);
       }
