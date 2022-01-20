@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Help!Students",
+    "slug": "helpstudents",
+    "scheme": "helpstudents",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#2D491FFF"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#2D491FFF"
+      },
+      "package": "host.exp.exponent"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
