@@ -4,6 +4,7 @@ import { theme } from '../../global/styles/theme';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: theme.colors.secondary50 
   },
   label: {
     fontSize: 18,
@@ -18,12 +19,13 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%', 
     height: 68,
-    borderColor: theme.colors.secondary50,
-    borderWidth: 1,
+    borderColor: '#FFFFFF',
+    borderWidth: .35,
     borderRadius: 8,
     alignItems: 'center',    
     paddingRight: 25,
     overflow: 'hidden',    
+    shadowOffset: {width: 1, height: 1}
   },
   selectBody: {
     flex: 1,

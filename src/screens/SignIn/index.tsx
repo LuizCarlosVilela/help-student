@@ -46,7 +46,7 @@ export function SignIn() {
         <View style={styles.content}>
           <Text style={styles.title}>Entre e organize sua vida acadêmica</Text>
 
-          <Text style={styles.subtitle}>feite por alunos para alunos</Text>
+          <Text style={styles.subtitle}>feito por alunos para alunos</Text>
 
           {loading ? (
             <ActivityIndicator color={theme.colors.primary} />
