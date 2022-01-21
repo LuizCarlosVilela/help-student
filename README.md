@@ -1,12 +1,12 @@
+# 💻 Help!Students
+
 <h1 align="center">
-  <img alt="Help Students" height="80" title="Help Students" src=".github/logo.png" />
+  <img alt="Help Students" title="Help Students" src="https://user-images.githubusercontent.com/57350762/150560525-81a701c9-f8be-4d80-986e-b79552c5e482.png" />
 </h1>
 
 <p align="center">
   <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=E51C44&labelColor=0A1033">
 </p>
-
-![cover](.github/cover.png?style=flat)
 
 ## 💻 Projeto
 
