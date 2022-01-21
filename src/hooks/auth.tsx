@@ -54,6 +54,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     try {
       setLoading(true);
 
+      
       SCOPE = encodeURI(SCOPE as string);
 
       const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
@@ -73,8 +74,9 @@ function AuthProvider({ children }: AuthProviderProps) {
           new Error('Não foi possível autenticar');
         }
 
+        
         const userData = {
-          id: userInfo.id,
+          id: userInfo,
           username: userInfo.name,
           firstName: userInfo.given_name,
           avatar: userInfo.picture,
@@ -82,10 +84,27 @@ function AuthProvider({ children }: AuthProviderProps) {
           token: params.access_token,
         } as User;
 
+        
+
         api.defaults.headers.authorization = `Bearer ${params.access_token}`;
         await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
-        setUser(userData);
+       
       }
+      
+      /*
+      --- Only test --- 
+      const userData = {
+        id: "1",
+        username: "amos_aureliano",
+        firstName: "Amós",
+        avatar: "",
+        email: "amos.aureliano@gmailcom",
+        token: "",
+      } as User;
+      setUser(userData);
+      -----------------
+      */
+
     } catch {
       throw new Error('Não foi possível autenticar');
     } finally {
