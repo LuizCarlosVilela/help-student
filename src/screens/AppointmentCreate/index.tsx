@@ -26,6 +26,7 @@ import { TextArea } from '../../components/TextArea';
 import { GuildProps } from '../../components/Guild';
 import { Header } from '../../components/Header';
 import { Button } from '../../components/Button';
+import { Input } from '../../components/Input';
 import { Guilds } from '../Guilds';
 
 
@@ -39,7 +40,12 @@ export function AppointmentCreate(){
   const [hour, setHour] = useState('');
   const [minute, setMinute] = useState('');
   const [description, setDescription] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [nameRule, setNameRule] = useState('');
+  const [descriptionRule, setDescriptionRule] = useState('');
 
+  
   const navigation = useNavigation();
 
   function handleOpenGuilds(){
@@ -57,6 +63,7 @@ export function AppointmentCreate(){
 
   function handleCategorySelect(categoryId: string) {
     setCategory(categoryId);
+    console.log(categoryId)
   } 
 
   async function handleSave() {
@@ -87,7 +94,7 @@ export function AppointmentCreate(){
       <Background>
         <ScrollView>  
           <Header 
-            title="Agendar partida"
+            title="Cadastro"
           />
 
           <Text style={[
@@ -104,98 +111,286 @@ export function AppointmentCreate(){
           />
 
           <View style={styles.form}>
-            <RectButton onPress={handleOpenGuilds}>
-              <View style={styles.select}>
-                {
-                  guild.icon 
-                  ? <GuildIcon guildId={guild.id} iconId={guild.icon} /> 
-                  : <View style={styles.image} />
-                }
-
-                <View style={styles.selectBody}>
-                  <Text style={styles.label}>
-                    { 
-                      guild.name 
-                      ? guild.name 
-                      : 'Selecione um servidor' 
-                    }
+          {
+              category === '1'
+              &&
+              <>
+              <RectButton onPress={handleOpenGuilds}>
+                <View style={styles.select}>
+                  {
+                    guild.icon 
+                    ? <GuildIcon guildId={guild.id} iconId={guild.icon} /> 
+                    : <View style={styles.image} />
+                  }
+ 
+                  <View style={styles.selectBody}>
+                    <Text style={styles.label}>
+                      { 
+                        guild.name 
+                        ? guild.name 
+                        : 'Selecione um servidor' 
+                      }
+                    </Text>
+                  </View>
+ 
+                  <Feather 
+                    name="chevron-right"
+                    color={theme.colors.heading}
+                    size={18}
+                  />
+                </View>
+              </RectButton>
+             
+              <View style={styles.field}>
+                <View>
+                  <Text style={[styles.label, { marginBottom: 12 } ]}>
+                    Dia e mês
                   </Text>
+ 
+                  <View style={styles.column}>
+                    <SmallInput 
+                      maxLength={2} 
+                      onChangeText={setDay}
+                    />
+                    <Text style={styles.divider}>
+                      /
+                    </Text>
+                    <SmallInput 
+                      maxLength={2} 
+                      onChangeText={setMonth}
+                    />
+                  </View>
                 </View>
 
-                <Feather 
-                  name="chevron-right"
-                  color={theme.colors.heading}
-                  size={18}
+                <View>
+                  <Text style={[styles.label, { marginBottom: 12 } ]}>
+                    Hora e minuto
+                  </Text>
+ 
+                  <View style={styles.column}>
+                    <SmallInput 
+                      maxLength={2} 
+                      onChangeText={setHour}
+                    />
+                    <Text style={styles.divider}>
+                      :
+                    </Text>
+                    <SmallInput 
+                      maxLength={2} 
+                      onChangeText={setMinute}
+                    />
+                  </View>
+                </View>           
+              </View>
+    
+              <View style={[styles.field, { marginBottom: 12 }]}>
+                <Text style={styles.label}>
+                  Descrição da atividade
+                </Text>
+ 
+                <Text style={styles.caracteresLimit}>
+                  Max 100 caracteres
+                </Text>
+              </View>
+    
+              <TextArea 
+                multiline
+                maxLength={100}
+                numberOfLines={5}
+                autoCorrect={false}
+                onChangeText={setDescription}
+              />
+ 
+              <View style={styles.footer}>
+                <Button 
+                  title="Agendar" 
+                  onPress={handleSave}
                 />
               </View>
-            </RectButton>
-            
-            <View style={styles.field}>
-              <View>
-                <Text style={[styles.label, { marginBottom: 12 } ]}>
-                  Dia e mês
-                </Text>
-
-                <View style={styles.column}>
-                  <SmallInput 
-                    maxLength={2} 
-                    onChangeText={setDay}
-                  />
-                  <Text style={styles.divider}>
-                    /
-                  </Text>
-                  <SmallInput 
-                    maxLength={2} 
-                    onChangeText={setMonth}
+            </>
+          }
+           
+          {
+            category === '2'
+            &&
+            <>
+              <RectButton onPress={handleOpenGuilds}>
+                <View style={styles.select}>
+                  {
+                    guild.icon 
+                    ? <GuildIcon guildId={guild.id} iconId={guild.icon} /> 
+                    : <View style={styles.image} />
+                  }
+                  <View style={styles.selectBody}>
+                    <Text style={styles.label}>
+                      { 
+                        guild.name 
+                        ? guild.name 
+                        : 'Selecione um servidor' 
+                      }
+                    </Text>
+                  </View>
+ 
+                  <Feather 
+                    name="chevron-right"
+                    color={theme.colors.heading}
+                    size={18}
                   />
                 </View>
+              </RectButton>
+             
+              <View style={styles.field}>
+                <View>
+                  <Text style={[styles.label, { marginBottom: 12 } ]}>
+                    Dia e mês
+                  </Text>
+ 
+                  <View style={styles.column}>
+                    <SmallInput 
+                      maxLength={2} 
+                      onChangeText={setDay}
+                    />
+                    <Text style={styles.divider}>
+                      /
+                    </Text>
+                    <SmallInput 
+                      maxLength={2} 
+                      onChangeText={setMonth}
+                    />
+                  </View>
+                </View>
+ 
+                <View>
+                  <Text style={[styles.label, { marginBottom: 12 } ]}>
+                    Hora e minuto
+                  </Text>
+ 
+                  <View style={styles.column}>
+                    <SmallInput 
+                      maxLength={2} 
+                      onChangeText={setHour}
+                    />
+                    <Text style={styles.divider}>
+                      :
+                    </Text>
+                    <SmallInput 
+                      maxLength={2} 
+                      onChangeText={setMinute}
+                    />
+                  </View>
+                </View>           
+              </View>
+    
+              <View style={[styles.field, { marginBottom: 12 }]}>
+                <Text style={styles.label}>
+                  Descrição
+                </Text>
+ 
+                <Text style={styles.caracteresLimit}>
+                  Max 100 caracteres
+                </Text>
+              </View>
+    
+              <TextArea 
+                multiline
+                maxLength={100}
+                numberOfLines={5}
+                autoCorrect={false}
+                onChangeText={setDescription}
+              />
+ 
+              <View style={styles.footer}>
+                <Button 
+                  title="Agendar" 
+                  onPress={handleSave}
+                />
+              </View>
+            </>
+          }
+          
+          {
+            category === '3'
+            &&
+            <>
+              <View style={[styles.field, {marginBottom: -15}]}>
+                <Text style={styles.label}>
+                  Email
+                </Text>
+              </View>
+             
+              <View style={[styles.field]}>                
+                <Input
+                  onChangeText={setEmail}
+                />     
               </View>
 
-              <View>
-                <Text style={[styles.label, { marginBottom: 12 } ]}>
-                  Hora e minuto
+              <View style={[styles.field, {marginBottom: -15}]}>
+                <Text style={styles.label}>
+                  Nome
                 </Text>
+              </View>
+             
+              <View style={[styles.field, { marginBottom: 12 }]}>
+                <Input 
+                  onChangeText={setName}
+                />     
+              </View>              
+ 
+              <View style={styles.footer}>
+                <Button 
+                  title="Cadastrar" 
+                  onPress={handleSave}
+                />
+              </View>
+            </>
+          }
+          
+          {
+            category === '4'
+            &&
+            <>
+              <View style={[styles.field, {marginBottom: -15}]}>
+                <Text style={styles.label}>
+                  Nome
+                </Text>
+              </View>
+             
+              <View style={[styles.field]}>                
+                <Input
+                  onChangeText={setNameRule}
+                />     
+              </View>
 
-                <View style={styles.column}>
-                  <SmallInput 
-                    maxLength={2} 
-                    onChangeText={setHour}
-                  />
-                  <Text style={styles.divider}>
-                    :
-                  </Text>
-                  <SmallInput 
-                    maxLength={2} 
-                    onChangeText={setMinute}
-                  />
-                </View>
-              </View>           
-            </View>
-
-            <View style={[styles.field, { marginBottom: 12 }]}>
-              <Text style={styles.label}>
-                Descrição
-              </Text>
-
-              <Text style={styles.caracteresLimit}>
-                Max 100 caracteres
-              </Text>
-            </View>
-
-            <TextArea 
-              multiline
-              maxLength={100}
-              numberOfLines={5}
-              autoCorrect={false}
-              onChangeText={setDescription}
-            />
-
-            <View style={styles.footer}>
-              <Button 
-                title="Agendar" 
-                onPress={handleSave}
-              />
-            </View>
+              <View style={[styles.field, { marginBottom: 12 }]}>
+                <Text style={styles.label}>
+                  Descrição
+                </Text>
+ 
+                <Text style={styles.caracteresLimit}>
+                  Max 100 caracteres
+                </Text>
+              </View>
+    
+              <TextArea 
+                multiline
+                maxLength={100}
+                numberOfLines={5}
+                autoCorrect={false}
+                onChangeText={setDescriptionRule}
+              />        
+ 
+              <View style={styles.footer}>
+                <Button 
+                  title="Cadastrar" 
+                  onPress={handleSave}
+                />
+              </View>
+            </>
+          }
+           
+           
+           
+           
           </View>
         </ScrollView>
       </Background>

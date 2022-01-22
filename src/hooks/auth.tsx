@@ -53,7 +53,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   async function signIn() {
     try {
       setLoading(true);
-
+      /*
       
       SCOPE = encodeURI(SCOPE as string);
 
@@ -91,8 +91,8 @@ function AuthProvider({ children }: AuthProviderProps) {
        
       }
       
-      /*
-      --- Only test --- 
+      
+      */
       const userData = {
         id: "1",
         username: "amos_aureliano",
@@ -102,9 +102,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         token: "",
       } as User;
       setUser(userData);
-      -----------------
-      */
-
+      
     } catch {
       throw new Error('Não foi possível autenticar');
     } finally {
