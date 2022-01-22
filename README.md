@@ -10,7 +10,7 @@
 
 ## 💻 Projeto
 
-Aplicativo para lhe ajudar a organiza suas tarefas e atividades do cotidiano estudantil, além de disponibilizar contatos e regras referente a instituição federal de alagoas (IFAL).
+Aplicativo para lhe ajudar a organiza suas tarefas e atividades do cotidiano estudantil, além de disponibilizar contatos, dicas e regras referente a instituição federal de alagoas (IFAL).
 
 ## :hammer_and_wrench: Features
 
