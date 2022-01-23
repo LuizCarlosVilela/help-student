@@ -17,7 +17,7 @@ import logo from '../../assets/logo.png';
 import { styles } from './styles';
 import { COLLECTION_APPOINTMENTS } from '../../configs/database';
 
-export function Home() {
+export default function Home() {
   const [category, setCategory] = useState('1');
   const [loading, setLoading] = useState(true);
   const [appointments, setAppointments] = useState<AppointmentProps[]>([]);

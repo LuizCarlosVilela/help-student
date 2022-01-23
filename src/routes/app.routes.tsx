@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { theme } from '../global/styles/theme';
 
 import { Home } from '../screens/Home';
-import { AppointmentCreate } from '../screens/AppointmentCreate';
+import AnnotationCreate from '../screens/AnnotationCreate';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -19,7 +19,7 @@ export function AppRoutes() {
       }}
     >
       <Screen name="Home" component={Home} />
-      <Screen name="AppointmentCreate" component={AppointmentCreate} />
+      <Screen name="AppointmentCreate" component={AnnotationCreate} />
     </Navigator>
   );
 }
