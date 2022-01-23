@@ -82,12 +82,12 @@ function AuthProvider({ children }: AuthProviderProps) {
           email: userInfo.email,
           token: params.access_token,
         } as User;
-
+  
         const user = await UserService.get(userInfo?.email);
         if (!user) {
           await UserService.post(userData);
         }
-
+        
         await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
         setUser(userData);
       }

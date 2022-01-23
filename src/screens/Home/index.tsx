@@ -18,7 +18,7 @@ import { styles } from './styles';
 import { COLLECTION_APPOINTMENTS } from '../../configs/database';
 
 export function Home() {
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('1');
   const [loading, setLoading] = useState(true);
   const [appointments, setAppointments] = useState<AppointmentProps[]>([]);
 
@@ -66,8 +66,9 @@ export function Home() {
       </View>
 
       <CategorySelect
-        categorySelected={category}
+        hasCheckBox
         setCategory={handleCategorySelect}
+        categorySelected={category}
       />
 
       {loading ? (
@@ -75,7 +76,7 @@ export function Home() {
       ) : (
         <>
           <ListHeader
-            title="Aulas agendadas"
+            title="Cadastrados"
             subtitle={`Total ${appointments.length}`}
           />
 

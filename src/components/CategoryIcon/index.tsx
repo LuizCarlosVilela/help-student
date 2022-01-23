@@ -1,23 +1,20 @@
 import React from 'react';
 import { Image, View } from 'react-native';
 
+import { SvgProps } from 'react-native-svg';
+
 import { styles } from './styles';
 import DiscordSvg from '../../assets/class-educational.svg';
 
-const { CDN_IMAGE } = process.env;
-
 type Props = {
-  guildId: string;
-  iconId: string | null;
+  icon: React.FC<SvgProps>;
 };
 
-export function GuildIcon({ guildId, iconId }: Props) {
-  const uri = `${CDN_IMAGE}/icons/${guildId}/${iconId}.png`;
-
+export default function CategoryIcon({ icon: Icon }: Props) {
   return (
     <View style={styles.container}>
-      {iconId ? (
-        <Image source={{ uri }} style={styles.image} resizeMode="cover" />
+      {Icon ? (
+        <Icon width={40} height={40} />
       ) : (
         <DiscordSvg width={40} height={40} />
       )}

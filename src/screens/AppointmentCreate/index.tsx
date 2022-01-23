@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { Feather } from '@expo/vector-icons';
-import { RectButton } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
@@ -14,40 +12,32 @@ import {
 } from 'react-native';
 
 import { COLLECTION_APPOINTMENTS } from '../../configs/database';
-import { theme } from '../../global/styles/theme';
 import { styles } from './styles';
 
 import { CategorySelect } from '../../components/CategorySelect';
 import { ModalView } from '../../components/ModalView';
 import { Background } from '../../components/Background';
 import { SmallInput } from '../../components/SmallInput';
-import { GuildIcon } from '../../components/GuildIcon';
 import { TextArea } from '../../components/TextArea';
-import { GuildProps } from '../../components/Guild';
 import { Header } from '../../components/Header';
 import { Button } from '../../components/Button';
-import { Guilds } from '../Guilds';
+import { Input } from '../../components/Input';
 
 export function AppointmentCreate() {
-  const [category, setCategory] = useState('');
-  const [openGuildsModa, setOpenGuildsModal] = useState(false);
-  const [guild, setGuild] = useState<GuildProps>({} as GuildProps);
+  const [category, setCategory] = useState('1');
+  const [person, setPerson] = useState('');
 
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [hour, setHour] = useState('');
   const [minute, setMinute] = useState('');
   const [description, setDescription] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [nameRule, setNameRule] = useState('');
+  const [descriptionRule, setDescriptionRule] = useState('');
 
   const navigation = useNavigation();
-
-  function handleOpenGuilds() {
-    setOpenGuildsModal(true);
-  }
-
-  function handleCloseGuilds() {
-    setOpenGuildsModal(false);
-  }
 
   function handleCategorySelect(categoryId: string) {
     setCategory(categoryId);
@@ -56,7 +46,7 @@ export function AppointmentCreate() {
   async function handleSave() {
     const newAppointment = {
       id: uuid.v4(),
-      guild,
+      person,
       category,
       date: `${day}/${month} às ${hour}:${minute}h`,
       description,
@@ -80,7 +70,7 @@ export function AppointmentCreate() {
     >
       <Background>
         <ScrollView>
-          <Header title="Agendar partida" />
+          <Header title="Cadastro" />
 
           <Text
             style={[
@@ -88,7 +78,7 @@ export function AppointmentCreate() {
               { marginLeft: 24, marginTop: 36, marginBottom: 18 },
             ]}
           >
-            Categoria
+            Selecione
           </Text>
 
           <CategorySelect
@@ -98,56 +88,166 @@ export function AppointmentCreate() {
           />
 
           <View style={styles.form}>
-            <View style={styles.field}>
-              <View>
-                <Text style={[styles.label, { marginBottom: 12 }]}>
-                  Dia e mês
-                </Text>
+            {category === '1' && (
+              <>
+                <View style={styles.field}>
+                  <View>
+                    <Text style={[styles.label, { marginBottom: 12 }]}>
+                      Dia e mês
+                    </Text>
 
-                <View style={styles.column}>
-                  <SmallInput maxLength={2} onChangeText={setDay} />
-                  <Text style={styles.divider}>/</Text>
-                  <SmallInput maxLength={2} onChangeText={setMonth} />
+                    <View style={styles.column}>
+                      <SmallInput maxLength={2} onChangeText={setDay} />
+                      <Text style={styles.divider}>/</Text>
+                      <SmallInput maxLength={2} onChangeText={setMonth} />
+                    </View>
+                  </View>
+
+                  <View>
+                    <Text style={[styles.label, { marginBottom: 12 }]}>
+                      Hora e minuto
+                    </Text>
+
+                    <View style={styles.column}>
+                      <SmallInput maxLength={2} onChangeText={setHour} />
+                      <Text style={styles.divider}>:</Text>
+                      <SmallInput maxLength={2} onChangeText={setMinute} />
+                    </View>
+                  </View>
                 </View>
-              </View>
 
-              <View>
-                <Text style={[styles.label, { marginBottom: 12 }]}>
-                  Hora e minuto
-                </Text>
+                <View style={[styles.field, { marginBottom: 12 }]}>
+                  <Text style={styles.label}>Descrição da atividade</Text>
 
-                <View style={styles.column}>
-                  <SmallInput maxLength={2} onChangeText={setHour} />
-                  <Text style={styles.divider}>:</Text>
-                  <SmallInput maxLength={2} onChangeText={setMinute} />
+                  <Text style={styles.caracteresLimit}>Max 100 caracteres</Text>
                 </View>
-              </View>
-            </View>
 
-            <View style={[styles.field, { marginBottom: 12 }]}>
-              <Text style={styles.label}>Descrição</Text>
+                <TextArea
+                  multiline
+                  maxLength={100}
+                  numberOfLines={5}
+                  autoCorrect={false}
+                  onChangeText={setDescription}
+                />
 
-              <Text style={styles.caracteresLimit}>Max 100 caracteres</Text>
-            </View>
+                <View style={styles.footer}>
+                  <Button title="Agendar" onPress={handleSave} />
+                </View>
+              </>
+            )}
 
-            <TextArea
-              multiline
-              maxLength={100}
-              numberOfLines={5}
-              autoCorrect={false}
-              onChangeText={setDescription}
-            />
+            {category === '2' && (
+              <>
+                <View style={styles.field}>
+                  <View>
+                    <Text style={[styles.label, { marginBottom: 12 }]}>
+                      Dia e mês
+                    </Text>
 
-            <View style={styles.footer}>
-              <Button title="Agendar" onPress={handleSave} />
-            </View>
+                    <View style={styles.column}>
+                      <SmallInput maxLength={2} onChangeText={setDay} />
+                      <Text style={styles.divider}>/</Text>
+                      <SmallInput maxLength={2} onChangeText={setMonth} />
+                    </View>
+                  </View>
+
+                  <View>
+                    <Text style={[styles.label, { marginBottom: 12 }]}>
+                      Hora e minuto
+                    </Text>
+
+                    <View style={styles.column}>
+                      <SmallInput maxLength={2} onChangeText={setHour} />
+                      <Text style={styles.divider}>:</Text>
+                      <SmallInput maxLength={2} onChangeText={setMinute} />
+                    </View>
+                  </View>
+                </View>
+
+                <View style={[styles.field, { marginBottom: -15 }]}>
+                  <Text style={styles.label}>Estudante / Professor</Text>
+                </View>
+
+                <View style={[styles.field]}>
+                  <Input onChangeText={setPerson} />
+                </View>
+
+                <View style={[styles.field, { marginBottom: 12 }]}>
+                  <Text style={styles.label}>Descrição</Text>
+
+                  <Text style={styles.caracteresLimit}>Max 100 caracteres</Text>
+                </View>
+
+                <TextArea
+                  multiline
+                  maxLength={100}
+                  numberOfLines={5}
+                  autoCorrect={false}
+                  onChangeText={setDescription}
+                />
+
+                <View style={styles.footer}>
+                  <Button title="Agendar" onPress={handleSave} />
+                </View>
+              </>
+            )}
+
+            {category === '3' && (
+              <>
+                <View style={[styles.field, { marginBottom: -15 }]}>
+                  <Text style={styles.label}>E-mail</Text>
+                </View>
+
+                <View style={[styles.field]}>
+                  <Input onChangeText={setEmail} />
+                </View>
+
+                <View style={[styles.field, { marginBottom: -15 }]}>
+                  <Text style={styles.label}>Nome</Text>
+                </View>
+
+                <View style={[styles.field, { marginBottom: 12 }]}>
+                  <Input onChangeText={setName} />
+                </View>
+
+                <View style={styles.footer}>
+                  <Button title="Cadastrar" onPress={handleSave} />
+                </View>
+              </>
+            )}
+
+            {category === '4' && (
+              <>
+                <View style={[styles.field, { marginBottom: -15 }]}>
+                  <Text style={styles.label}>Nome</Text>
+                </View>
+
+                <View style={[styles.field]}>
+                  <Input onChangeText={setNameRule} />
+                </View>
+
+                <View style={[styles.field, { marginBottom: 12 }]}>
+                  <Text style={styles.label}>Descrição</Text>
+
+                  <Text style={styles.caracteresLimit}>Max 100 caracteres</Text>
+                </View>
+
+                <TextArea
+                  multiline
+                  maxLength={100}
+                  numberOfLines={5}
+                  autoCorrect={false}
+                  onChangeText={setDescriptionRule}
+                />
+
+                <View style={styles.footer}>
+                  <Button title="Cadastrar" onPress={handleSave} />
+                </View>
+              </>
+            )}
           </View>
         </ScrollView>
       </Background>
-
-      <ModalView visible={openGuildsModa} closeModal={handleCloseGuilds}>
-        <Text>Teste Modal</Text>
-      </ModalView>
     </KeyboardAvoidingView>
   );
 }

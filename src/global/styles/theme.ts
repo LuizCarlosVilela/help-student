@@ -11,6 +11,9 @@ export const theme = {
     secondary50: 'rgba(45,73,31,0.50)',
     secondary40: 'rgba(45,73,31,0.40)',
     secondary30: 'rgba(45,73,31,0.30)',
+    secondary20: 'rgba(45,73,31,0.20)',
+    secondary10: 'rgba(45,73,31,0.10)',
+    secondary5: 'rgba(45,73,31,0.05)',
 
     overlay: 'rgba(0,0,0,0.7)',
     highlight: '#ABB1CC',
