@@ -24,10 +24,10 @@ export function Profile() {
   }
 
   return (
-    <View style={styles.container}>
-      <TouchableNativeFeedback onPress={handleSignOut}>
+    <TouchableNativeFeedback style={styles.container} onPress={handleSignOut}>
+      <View>
         <Avatar urlImage={user.avatar} />
-      </TouchableNativeFeedback>
+      </View>
 
       <View>
         <View style={styles.user}>
@@ -38,6 +38,6 @@ export function Profile() {
 
         <Text style={styles.message}>{user.email}</Text>
       </View>
-    </View>
+    </TouchableNativeFeedback>
   );
 }

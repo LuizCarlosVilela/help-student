@@ -16,13 +16,13 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 20
+    paddingVertical: 20,
   },
   title: {
     fontFamily: theme.fonts.title700,
     color: theme.colors.heading,
     fontSize: 15,
-    marginTop: 15
+    marginTop: 15,
   },
   check: {
     position: 'absolute',
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.colors.secondary100,
     borderColor: theme.colors.secondary50,
     borderWidth: 2,
-    borderRadius: 3
+    borderRadius: 3,
   },
   checked: {
     position: 'absolute',
@@ -41,7 +41,8 @@ export const styles = StyleSheet.create({
     right: 7,
     width: 10,
     height: 10,
-    backgroundColor: theme.colors.primary,
-    borderRadius: 3
-  }
+    backgroundColor: '#ffffff',
+    opacity: 0.8,
+    borderRadius: 3,
+  },
 });

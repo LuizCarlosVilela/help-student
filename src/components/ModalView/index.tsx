@@ -13,20 +13,11 @@ import { Background } from '../Background';
 type Props = ModalProps & {
   children: ReactNode;
   closeModal: () => void;
-}
+};
 
-export function ModalView({
-  children, 
-  closeModal,
-  ...rest
-}: Props){
+export function ModalView({ children, closeModal, ...rest }: Props) {
   return (
-    <Modal
-      transparent
-      animationType="slide"
-      statusBarTranslucent
-      {...rest}
-    >
+    <Modal transparent animationType="slide" statusBarTranslucent {...rest}>
       <TouchableWithoutFeedback onPress={closeModal}>
         <View style={styles.overlay}>
           <View style={styles.container}>

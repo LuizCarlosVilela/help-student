@@ -1,17 +1,18 @@
 import React from 'react';
-import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SvgProps } from 'react-native-svg';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 import { styles } from './styles';
 import { theme } from '../../global/styles/theme';
 
-type Props = RectButtonProps & {
+type Props = {
   title: string;
   icon: React.FC<SvgProps>;
   hasCheckBox?: boolean;
   checked?: boolean;
+  onPress: () => void;
 };
 
 export function Category({
@@ -19,18 +20,18 @@ export function Category({
   icon: Icon,
   checked = false,
   hasCheckBox = false,
-  ...rest
+  onPress,
 }: Props) {
   const { secondary40, secondary50, secondary60, secondary85 } = theme.colors;
 
   return (
-    <RectButton {...rest}>
+    <TouchableNativeFeedback onPress={onPress}>
       <LinearGradient
         style={styles.container}
         colors={[secondary50, secondary60]}
       >
         <LinearGradient
-          style={[styles.content, { opacity: checked ? 1.5 : 1 }]}
+          style={[styles.content, { opacity: checked ? 2 : 1 }]}
           colors={[checked ? secondary85 : secondary50, secondary40]}
         >
           {hasCheckBox && (
@@ -42,6 +43,6 @@ export function Category({
           <Text style={styles.title}>{title}</Text>
         </LinearGradient>
       </LinearGradient>
-    </RectButton>
+    </TouchableNativeFeedback>
   );
 }
