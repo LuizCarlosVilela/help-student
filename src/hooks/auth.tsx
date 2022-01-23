@@ -14,8 +14,9 @@ const { CLIENT_ID } = process.env;
 const { REDIRECT_URI } = process.env;
 const { RESPONSE_TYPE } = process.env;
 
-import { api } from '../services/api';
 import { COLLECTION_USERS } from '../configs/database';
+
+import UserService from '../services/UserService';
 
 type User = {
   id: string;
@@ -74,15 +75,19 @@ function AuthProvider({ children }: AuthProviderProps) {
         }
 
         const userData = {
-          id: userInfo,
+          id: userInfo.id,
           username: userInfo.name,
           firstName: userInfo.given_name,
           avatar: userInfo.picture,
           email: userInfo.email,
           token: params.access_token,
         } as User;
-
-        api.defaults.headers.authorization = `Bearer ${params.access_token}`;
+  
+        const user = await UserService.get(userInfo?.email);
+        if (!user) {
+          await UserService.post(userData);
+        }
+        
         await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
         setUser(userData);
       }
@@ -103,7 +108,6 @@ function AuthProvider({ children }: AuthProviderProps) {
 
     if (storage) {
       const userLogged = JSON.parse(storage) as User;
-      api.defaults.headers.authorization = `Bearer ${userLogged.token}`;
 
       setUser(userLogged);
     }
