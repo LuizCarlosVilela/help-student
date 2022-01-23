@@ -28,8 +28,7 @@ import { Header } from '../../components/Header';
 import { Button } from '../../components/Button';
 import { Guilds } from '../Guilds';
 
-
-export function AppointmentCreate(){
+export function AppointmentCreate() {
   const [category, setCategory] = useState('');
   const [openGuildsModa, setOpenGuildsModal] = useState(false);
   const [guild, setGuild] = useState<GuildProps>({} as GuildProps);
@@ -42,22 +41,17 @@ export function AppointmentCreate(){
 
   const navigation = useNavigation();
 
-  function handleOpenGuilds(){
+  function handleOpenGuilds() {
     setOpenGuildsModal(true);
   }
 
-  function handleCloseGuilds(){
-    setOpenGuildsModal(false);
-  }
-
-  function handleGuildSelect(guildSelect: GuildProps){
-    setGuild(guildSelect);
+  function handleCloseGuilds() {
     setOpenGuildsModal(false);
   }
 
   function handleCategorySelect(categoryId: string) {
     setCategory(categoryId);
-  } 
+  }
 
   async function handleSave() {
     const newAppointment = {
@@ -65,7 +59,7 @@ export function AppointmentCreate(){
       guild,
       category,
       date: `${day}/${month} às ${hour}:${minute}h`,
-      description
+      description,
     };
 
     const storage = await AsyncStorage.getItem(COLLECTION_APPOINTMENTS);
@@ -76,113 +70,67 @@ export function AppointmentCreate(){
       JSON.stringify([...appointments, newAppointment])
     );
 
-    navigation.navigate('Home');    
+    navigation.navigate('Home');
   }
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height' }
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
       <Background>
-        <ScrollView>  
-          <Header 
-            title="Agendar partida"
-          />
+        <ScrollView>
+          <Header title="Agendar partida" />
 
-          <Text style={[
-            styles.label, 
-            { marginLeft: 24, marginTop: 36, marginBottom: 18 }]}
+          <Text
+            style={[
+              styles.label,
+              { marginLeft: 24, marginTop: 36, marginBottom: 18 },
+            ]}
           >
             Categoria
           </Text>
 
-          <CategorySelect 
+          <CategorySelect
             hasCheckBox
             setCategory={handleCategorySelect}
             categorySelected={category}
           />
 
           <View style={styles.form}>
-            <RectButton onPress={handleOpenGuilds}>
-              <View style={styles.select}>
-                {
-                  guild.icon 
-                  ? <GuildIcon guildId={guild.id} iconId={guild.icon} /> 
-                  : <View style={styles.image} />
-                }
-
-                <View style={styles.selectBody}>
-                  <Text style={styles.label}>
-                    { 
-                      guild.name 
-                      ? guild.name 
-                      : 'Selecione um servidor' 
-                    }
-                  </Text>
-                </View>
-
-                <Feather 
-                  name="chevron-right"
-                  color={theme.colors.heading}
-                  size={18}
-                />
-              </View>
-            </RectButton>
-            
             <View style={styles.field}>
               <View>
-                <Text style={[styles.label, { marginBottom: 12 } ]}>
+                <Text style={[styles.label, { marginBottom: 12 }]}>
                   Dia e mês
                 </Text>
 
                 <View style={styles.column}>
-                  <SmallInput 
-                    maxLength={2} 
-                    onChangeText={setDay}
-                  />
-                  <Text style={styles.divider}>
-                    /
-                  </Text>
-                  <SmallInput 
-                    maxLength={2} 
-                    onChangeText={setMonth}
-                  />
+                  <SmallInput maxLength={2} onChangeText={setDay} />
+                  <Text style={styles.divider}>/</Text>
+                  <SmallInput maxLength={2} onChangeText={setMonth} />
                 </View>
               </View>
 
               <View>
-                <Text style={[styles.label, { marginBottom: 12 } ]}>
+                <Text style={[styles.label, { marginBottom: 12 }]}>
                   Hora e minuto
                 </Text>
 
                 <View style={styles.column}>
-                  <SmallInput 
-                    maxLength={2} 
-                    onChangeText={setHour}
-                  />
-                  <Text style={styles.divider}>
-                    :
-                  </Text>
-                  <SmallInput 
-                    maxLength={2} 
-                    onChangeText={setMinute}
-                  />
+                  <SmallInput maxLength={2} onChangeText={setHour} />
+                  <Text style={styles.divider}>:</Text>
+                  <SmallInput maxLength={2} onChangeText={setMinute} />
                 </View>
-              </View>           
+              </View>
             </View>
 
             <View style={[styles.field, { marginBottom: 12 }]}>
-              <Text style={styles.label}>
-                Descrição
-              </Text>
+              <Text style={styles.label}>Descrição</Text>
 
-              <Text style={styles.caracteresLimit}>
-                Max 100 caracteres
-              </Text>
+              <Text style={styles.caracteresLimit}>Max 100 caracteres</Text>
             </View>
 
-            <TextArea 
+            <TextArea
               multiline
               maxLength={100}
               numberOfLines={5}
@@ -191,19 +139,15 @@ export function AppointmentCreate(){
             />
 
             <View style={styles.footer}>
-              <Button 
-                title="Agendar" 
-                onPress={handleSave}
-              />
+              <Button title="Agendar" onPress={handleSave} />
             </View>
           </View>
         </ScrollView>
       </Background>
 
       <ModalView visible={openGuildsModa} closeModal={handleCloseGuilds}>
-        <Guilds handleGuildSelect={handleGuildSelect}/>
+        <Text>Teste Modal</Text>
       </ModalView>
-      
     </KeyboardAvoidingView>
   );
 }
