@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-import { COLLECTION_APPOINTMENTS } from '../../configs/database';
+import { COLLECTION_ANNOTATIONS } from '../../configs/database';
 import { styles } from './styles';
 
 import { CategorySelect } from '../../components/CategorySelect';
@@ -23,7 +23,7 @@ import { Header } from '../../components/Header';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 
-export default function AppointmentCreate() {
+export default function AnnotationCreate() {
   const [category, setCategory] = useState('1');
   const [person, setPerson] = useState('');
 
@@ -44,7 +44,7 @@ export default function AppointmentCreate() {
   }
 
   async function handleSave() {
-    const newAppointment = {
+    const newAnnotation = {
       id: uuid.v4(),
       person,
       category,
@@ -52,12 +52,12 @@ export default function AppointmentCreate() {
       description,
     };
 
-    const storage = await AsyncStorage.getItem(COLLECTION_APPOINTMENTS);
-    const appointments = storage ? JSON.parse(storage) : [];
+    const storage = await AsyncStorage.getItem(COLLECTION_ANNOTATIONS);
+    const annotations = storage ? JSON.parse(storage) : [];
 
     await AsyncStorage.setItem(
-      COLLECTION_APPOINTMENTS,
-      JSON.stringify([...appointments, newAppointment])
+      COLLECTION_ANNOTATIONS,
+      JSON.stringify([...annotations, newAnnotation])
     );
 
     navigation.navigate('Home');

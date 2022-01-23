@@ -4,7 +4,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CategorySelect } from '../../components/CategorySelect';
-import { Appointment, AppointmentProps } from '../../components/Appointment';
+import { Annotation, AnnotationProps } from '../../components/Annotation';
 import { ListDivider } from '../../components/ListDivider';
 import { ListHeader } from '../../components/ListHeader';
 import { Background } from '../../components/Background';
@@ -15,12 +15,12 @@ import { Load } from '../../components/Load';
 import logo from '../../assets/logo.png';
 
 import { styles } from './styles';
-import { COLLECTION_APPOINTMENTS } from '../../configs/database';
+import { COLLECTION_ANNOTATIONS } from '../../configs/database';
 
 export default function Home() {
   const [category, setCategory] = useState('1');
   const [loading, setLoading] = useState(true);
-  const [appointments, setAppointments] = useState<AppointmentProps[]>([]);
+  const [annotations, setAnnotations] = useState<AnnotationProps[]>([]);
 
   const navigation = useNavigation();
 
@@ -28,22 +28,22 @@ export default function Home() {
     categoryId === category ? setCategory('') : setCategory(categoryId);
   }
 
-  function handleAppointmentDetails(guildSelected: AppointmentProps) {
+  function handleAnnotationDetails(guildSelected: AnnotationProps) {
     console.log(guildSelected);
   }
 
-  function handleAppointmentCreate() {
-    navigation.navigate('AppointmentCreate');
+  function handleAnnotationCreate() {
+    navigation.navigate('AnnotationCreate');
   }
 
-  async function loadAppointments() {
-    const response = await AsyncStorage.getItem(COLLECTION_APPOINTMENTS);
-    const storage: AppointmentProps[] = response ? JSON.parse(response) : [];
+  async function loadAnnotations() {
+    const response = await AsyncStorage.getItem(COLLECTION_ANNOTATIONS);
+    const storage: AnnotationProps[] = response ? JSON.parse(response) : [];
 
     if (category) {
-      setAppointments(storage.filter((item) => item.category === category));
+      setAnnotations(storage.filter((item) => item.category === category));
     } else {
-      setAppointments(storage);
+      setAnnotations(storage);
     }
 
     setLoading(false);
@@ -51,7 +51,7 @@ export default function Home() {
 
   useFocusEffect(
     useCallback(() => {
-      loadAppointments();
+      loadAnotations();
     }, [category])
   );
 
@@ -61,7 +61,7 @@ export default function Home() {
         <Image source={logo} />
         <View style={styles.contentHeader}>
           <Profile />
-          <ButtonAdd onPress={handleAppointmentCreate} />
+          <ButtonAdd onPress={handleAnnotationCreate} />
         </View>
       </View>
 
@@ -77,16 +77,16 @@ export default function Home() {
         <>
           <ListHeader
             title="Cadastrados"
-            subtitle={`Total ${appointments.length}`}
+            subtitle={`Total ${annotations.length}`}
           />
 
           <FlatList
-            data={appointments}
+            data={annotations}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <Appointment
+              <Annotation
                 data={item}
-                onPress={() => handleAppointmentDetails(item)}
+                onPress={() => handleAnnotationDetails(item)}
               />
             )}
             ItemSeparatorComponent={() => <ListDivider />}

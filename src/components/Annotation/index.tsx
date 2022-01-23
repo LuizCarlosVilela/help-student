@@ -11,7 +11,7 @@ import CalendarSvg from '../../assets/calendar.svg';
 import CategoryIcon from '../CategoryIcon';
 import { categories } from '../../utils/categories';
 
-export type AppointmentProps = {
+export type AnnotationProps = {
   id: string;
   category: string;
   date: string;
@@ -20,10 +20,10 @@ export type AppointmentProps = {
 };
 
 type Props = RectButtonProps & {
-  data: AppointmentProps;
+  data: AnnotationProps;
 };
 
-export function Appointment({ data, ...rest }: Props) {
+export function Annotation({ data, ...rest }: Props) {
   const [category] = categories.filter((item) => item.id === data.category);
   const { primary, on, secondary50, secondary70 } = theme.colors;
 

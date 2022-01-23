@@ -19,7 +19,7 @@ export function AppRoutes() {
       }}
     >
       <Screen name="Home" component={Home} />
-      <Screen name="AppointmentCreate" component={AnnotationCreate} />
+      <Screen name="AnnotationCreate" component={AnnotationCreate} />
     </Navigator>
   );
 }
