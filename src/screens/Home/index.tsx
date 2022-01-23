@@ -51,7 +51,7 @@ export default function Home() {
 
   useFocusEffect(
     useCallback(() => {
-      loadAnotations();
+      loadAnnotations();
     }, [category])
   );
 
