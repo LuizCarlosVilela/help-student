@@ -5,7 +5,7 @@ export default class UserService {
     const validation = validationUser(user);
 
     if (validation?.error) {
-      return validation?.error;
+      return validation;
     }
 
     await UserController.post(user);
