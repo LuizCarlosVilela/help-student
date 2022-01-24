@@ -8043,6 +8043,11 @@ react-native-svg@12.1.0:
     css-select "^2.1.0"
     css-tree "^1.0.0-alpha.39"
 
+react-native-toast-message@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-2.1.1.tgz#4d56add4ced45153a2d66649d21363de10952637"
+  integrity sha512-0ZfmphT8RtrWUuZ28y/zwo/aKtvbMtWK4taEDFxOTf6Lwj29YuBv7mA0Nh/I2Xl4/prnMuZe/lZUORcKNuYfkQ==
+
 react-native-uuid@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.1.tgz#ed4e2dfb1683eddb66967eb5dca140dfe1abddb9"
@@ -9081,6 +9086,11 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     extend-shallow "^3.0.2"
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
+
+toastify-react-native@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/toastify-react-native/-/toastify-react-native-2.0.0.tgz#5a44d45156dd3aec4b43f349b68c29fc5f323bb4"
+  integrity sha512-1OZVtZifjSTR4VNcNlbBtTlN79eU7Cp6foyJwd1p7zwlQP6jbzSf0EzgTNNQ8gR2m8vu5X8YtysE9e/2GHXzRA==
 
 toidentifier@1.0.0:
   version "1.0.0"

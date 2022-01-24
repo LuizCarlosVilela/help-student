@@ -9,21 +9,31 @@ import {
   Platform,
   ScrollView,
   KeyboardAvoidingView,
+  ToastAndroid,
 } from 'react-native';
 
-import { COLLECTION_ANNOTATIONS } from '../../configs/database';
+import AnnonationService from '../../services/AnnonationService';
+import { Annotation } from '../../services/Controllers/AnnotationsController';
 import { styles } from './styles';
+import Toast from 'react-native-toast-message';
 
 import { CategorySelect } from '../../components/CategorySelect';
-import { ModalView } from '../../components/ModalView';
 import { Background } from '../../components/Background';
 import { SmallInput } from '../../components/SmallInput';
 import { TextArea } from '../../components/TextArea';
 import { Header } from '../../components/Header';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
+import { useAuth } from '../../hooks/auth';
+
+type responseType = {
+  message?: string;
+  error?: string;
+};
 
 export default function AnnotationCreate() {
+  const { user } = useAuth();
+
   const [category, setCategory] = useState('1');
   const [person, setPerson] = useState('');
 
@@ -34,8 +44,6 @@ export default function AnnotationCreate() {
   const [description, setDescription] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
-  const [nameRule, setNameRule] = useState('');
-  const [descriptionRule, setDescriptionRule] = useState('');
 
   const navigation = useNavigation();
 
@@ -48,19 +56,41 @@ export default function AnnotationCreate() {
       id: uuid.v4(),
       person,
       category,
+      email,
+      name,
       date: `${day}/${month} às ${hour}:${minute}h`,
       description,
-    };
+    } as Annotation;
 
-    const storage = await AsyncStorage.getItem(COLLECTION_ANNOTATIONS);
-    const annotations = storage ? JSON.parse(storage) : [];
+    let userId = user?.id;
+    const response = (await AnnonationService.post(
+      userId,
+      newAnnotation
+    )) as responseType;
 
-    await AsyncStorage.setItem(
-      COLLECTION_ANNOTATIONS,
-      JSON.stringify([...annotations, newAnnotation])
-    );
+    ToastAndroid.show('Request sent successfully!', ToastAndroid.SHORT);
 
-    navigation.navigate('Home');
+    if (response && response?.message) {
+      let type = 'sucess';
+      showMessage(response.message, type);
+
+      // setTimeout(() => {
+      //   navigation.navigate('Home');
+      // }, 500);
+    }
+
+    if (response?.error) {
+      let type = 'error';
+      showMessage(response.error, type);
+    }
+  }
+
+  function showMessage(message: string, type: string) {
+    Toast.show({
+      type: 'sucess',
+      text1: 'Help!Student',
+      text2: `${message}`,
+    });
   }
 
   return (
@@ -223,7 +253,7 @@ export default function AnnotationCreate() {
                 </View>
 
                 <View style={[styles.field]}>
-                  <Input onChangeText={setNameRule} />
+                  <Input onChangeText={setName} />
                 </View>
 
                 <View style={[styles.field, { marginBottom: 12 }]}>
@@ -237,7 +267,7 @@ export default function AnnotationCreate() {
                   maxLength={100}
                   numberOfLines={5}
                   autoCorrect={false}
-                  onChangeText={setDescriptionRule}
+                  onChangeText={setDescription}
                 />
 
                 <View style={styles.footer}>

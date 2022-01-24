@@ -1,5 +1,5 @@
-import { getDocs, addDoc } from 'firebase/firestore/lite';
-
+import { getDocs, addDoc, setDoc, doc } from 'firebase/firestore/lite';
+import { Annotation } from './AnnotationsController';
 import { connection } from '../firebase';
 
 export type User = {
@@ -9,21 +9,36 @@ export type User = {
   avatar: string;
   email: string;
   token: string;
+  annotations: Annotation[];
 };
 
 export default class UserController {
   static async post(user: User) {
-    const reference = connection('users');
-    const response = await addDoc(reference, user);
-    return response;
+    try {
+      const reference = connection('users');
+      const document = doc(reference, user.id);
+
+      if (document) {
+        const response = await setDoc(document, user);
+        return response;
+      }
+
+      return null;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   }
 
   static async list() {
     const reference = connection('users');
-    const response = await getDocs(reference);
 
-    if (response?.docs.length > 0) {
-      return response.docs.map((doc) => doc.data());
+    if (reference) {
+      const response = await getDocs(reference);
+
+      if (response?.docs.length > 0) {
+        return response.docs.map((doc) => doc.data());
+      }
     }
 
     return null;
@@ -31,10 +46,13 @@ export default class UserController {
 
   static async get(email: string) {
     const response = await this.list();
-    const filter = response?.filter((user) => user.email === email);
 
-    if (filter && filter?.length > 0) {
-      return filter;
+    if (response) {
+      const filter = response?.filter((user) => user.email === email);
+
+      if (filter && filter?.length > 0) {
+        return filter;
+      }
     }
 
     return null;

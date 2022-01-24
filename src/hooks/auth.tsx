@@ -17,15 +17,7 @@ const { RESPONSE_TYPE } = process.env;
 import { COLLECTION_USERS } from '../configs/database';
 
 import UserService from '../services/UserService';
-
-type User = {
-  id: string;
-  username: string;
-  firstName: string;
-  avatar: string;
-  email: string;
-  token: string;
-};
+import { User } from '../services/Controllers/UserController';
 
 type AuthContextData = {
   user: User;
@@ -81,13 +73,14 @@ function AuthProvider({ children }: AuthProviderProps) {
           avatar: userInfo.picture,
           email: userInfo.email,
           token: params.access_token,
+          annotations: [],
         } as User;
-  
+
         const user = await UserService.get(userInfo?.email);
         if (!user) {
           await UserService.post(userData);
         }
-        
+
         await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
         setUser(userData);
       }

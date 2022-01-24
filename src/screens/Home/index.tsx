@@ -3,6 +3,9 @@ import { View, FlatList, Image } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import AnnonationService from '../../services/AnnonationService';
+import { Annotation as AnnotationType } from '../../services/Controllers/AnnotationsController';
+
 import { CategorySelect } from '../../components/CategorySelect';
 import { Annotation, AnnotationProps } from '../../components/Annotation';
 import { ListDivider } from '../../components/ListDivider';
@@ -11,6 +14,7 @@ import { Background } from '../../components/Background';
 import { ButtonAdd } from '../../components/ButtonAdd';
 import { Profile } from '../../components/Profile';
 import { Load } from '../../components/Load';
+import { useAuth } from '../../hooks/auth';
 
 import logo from '../../assets/logo.png';
 
@@ -18,6 +22,7 @@ import { styles } from './styles';
 import { COLLECTION_ANNOTATIONS } from '../../configs/database';
 
 export default function Home() {
+  const { user } = useAuth();
   const [category, setCategory] = useState('1');
   const [loading, setLoading] = useState(true);
   const [annotations, setAnnotations] = useState<AnnotationProps[]>([]);
@@ -37,13 +42,15 @@ export default function Home() {
   }
 
   async function loadAnnotations() {
-    const response = await AsyncStorage.getItem(COLLECTION_ANNOTATIONS);
-    const storage: AnnotationProps[] = response ? JSON.parse(response) : [];
+    let userId = user?.id;
+    const response = await AnnonationService.list(userId);
 
-    if (category) {
-      setAnnotations(storage.filter((item) => item.category === category));
-    } else {
-      setAnnotations(storage);
+    if (response) {
+      if (category) {
+        setAnnotations(response.filter((item) => item.category === category));
+      } else {
+        setAnnotations(response);
+      }
     }
 
     setLoading(false);

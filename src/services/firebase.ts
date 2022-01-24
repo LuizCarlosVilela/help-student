@@ -13,5 +13,10 @@ let firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export function connection(document: string) {
-  return collection(getFirestore(app), document);
+  if (document === '' || document === undefined) {
+    throw new Error('Não foi possível conectar ao banco de dados');
+  }
+
+  const response = collection(getFirestore(app), document);
+  return response;
 }

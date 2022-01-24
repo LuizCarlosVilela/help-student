@@ -8,8 +8,11 @@ export default class UserService {
       return validation;
     }
 
-    await UserController.post(user);
-    return { message: 'Usuário cadastrado com sucesso!' };
+    const response = await UserController.post(user);
+    if (!response) {
+      return { error: 'Aconteceu algum error' };
+    }
+    return response;
   }
 
   static async list() {
@@ -23,6 +26,12 @@ export default class UserService {
   }
 
   static async get(email: string) {
+    const validation = validationEmail(email);
+
+    if (validation?.error) {
+      return validation;
+    }
+
     const response = await UserController.get(email);
 
     if (response) {
@@ -38,5 +47,11 @@ function validationUser(user: User) {
     return { error: 'Usuário inválido' };
   } else if (user.username === '' || user.username === undefined) {
     return { error: 'Usuário inválido' };
+  }
+}
+
+function validationEmail(email: string) {
+  if (email === '' || email === undefined || !email.includes('@')) {
+    return { error: 'E-mail inválido' };
   }
 }
